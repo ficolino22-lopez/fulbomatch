@@ -1,0 +1,429 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <title>Fulbo Match - Crear Partido</title>
+    <!-- Google Material Symbols & Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffffff",
+                        "primary-fixed": "#c3f400",
+                        "primary-fixed-dim": "#abd600",
+                        "primary-container": "#c3f400",
+                        "on-primary": "#283500",
+                        "on-primary-fixed": "#161e00",
+                        "surface": "#0c1324",
+                        "surface-container": "#191f31",
+                        "surface-container-low": "#151b2d",
+                        "surface-container-high": "#23293c",
+                        "surface-container-highest": "#2e3447",
+                        "surface-container-lowest": "#070d1f",
+                        "on-surface": "#dce1fb",
+                        "on-surface-variant": "#c4c9ac",
+                        "secondary": "#bcc7de",
+                        "tertiary-fixed-dim": "#7bd0ff",
+                        "error": "#ffb4ab",
+                        "outline": "#8e9379"
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0c1324; color: #dce1fb; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        ::-webkit-scrollbar { display: none; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen">
+
+    <!-- Header Fijo Superior -->
+    <header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+        <div class="h-16 px-4 flex items-center justify-between max-w-[440px] mx-auto w-full">
+            <a aria-label="Volver" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary-container transition-colors min-h-[44px] min-w-[44px] pr-2 items-center" href="{% url 'panel_host' %}">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                <span class="text-xs font-bold uppercase tracking-wider">Volver</span>
+            </a>
+            <h1 class="font-syne text-[18px] tracking-tight uppercase text-on-surface truncate px-2 text-center flex-1 font-bold">Armar Partido</h1>
+            
+            <!-- Avatar / Icono de Usuario -->
+            <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0 shadow-sm text-on-primary font-bold">
+                <span class="material-symbols-outlined text-[18px]">person</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 flex flex-col relative w-full pt-20 bg-surface max-w-[440px] mx-auto pb-safe">
+        <div class="flex flex-col w-full pb-10">
+            
+            <!-- Status & Motivational Header -->
+            <section class="px-4 pt-2 pb-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-container/15 text-primary-container shadow-sm mb-3">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-container"></span>
+                    </span>
+                    <span class="text-[10px] uppercase tracking-wider font-extrabold text-primary-container">MODO CAPITÁN · ORGANIZADOR</span>
+                </div>
+                <h2 class="font-syne text-[26px] uppercase text-on-surface tracking-tight leading-none mb-2">
+                    ¡Armá tu partido y llená la cancha! <span class="text-primary-container inline-block">⚽</span>
+                </h2>
+                <p class="text-xs text-on-surface-variant">
+                    Lanzá la convocatoria en menos de 2 minutos. Encontrá cracks confiables para completar el plantel sin vueltas.
+                </p>
+            </section>
+
+            <!-- Formulario Django (POST) -->
+            <form class="flex flex-col gap-5 px-4 mt-3" id="crear-partido-form" method="POST">
+                {% csrf_token %}
+
+                <!-- 1. Título del Partido -->
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-bold uppercase text-on-surface flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[18px] text-primary-container">sports_soccer</span>
+                        Título del Partido
+                    </label>
+                    <div class="relative flex items-center">
+                        <span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant text-[20px] pointer-events-none">campaign</span>
+                        <input name="titulo" class="w-full bg-surface-container-high text-on-surface placeholder:text-on-surface-variant/50 pl-11 pr-4 py-3.5 rounded-xl text-xs outline-none focus:bg-surface-container-highest transition-colors shadow-inner border border-slate-800" placeholder="Ej: F7 Nocturno en La Canchita de Oro (Palermo)" required type="text"/>
+                    </div>
+                </div>
+
+                <!-- 2. Modalidad de Juego (Format Picker con Input Oculto) -->
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold uppercase text-on-surface flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[18px] text-primary-container">groups</span>
+                            Modalidad de Fútbol
+                        </label>
+                        <span class="text-[10px] text-primary-container uppercase font-extrabold tracking-wide" id="selected-modality-hint">14 jugadores</span>
+                    </div>
+                    <!-- Input oculto para enviar el valor a Django -->
+                    <input type="hidden" name="modalidad" id="id_modalidad" value="F7">
+                    
+                    <div class="grid grid-cols-4 gap-2" id="format-picker">
+                        <button class="format-btn flex flex-col items-center justify-center py-3 px-1 rounded-xl bg-surface-container-high text-on-surface-variant transition-all text-center border border-slate-800" data-desc="10 jugadores" data-val="F5" type="button">
+                            <span class="font-syne text-lg text-on-surface leading-none mb-1">F5</span>
+                            <span class="text-[9px] uppercase leading-tight font-bold">5 vs 5</span>
+                        </button>
+                        <button class="format-btn flex flex-col items-center justify-center py-3 px-1 rounded-xl bg-primary-container text-on-primary transition-all text-center shadow-lg border border-primary-container" data-desc="14 jugadores" data-val="F7" type="button">
+                            <span class="font-syne text-lg text-on-primary leading-none mb-1">F7</span>
+                            <span class="text-[9px] uppercase leading-tight font-extrabold text-on-primary">7 vs 7</span>
+                        </button>
+                        <button class="format-btn flex flex-col items-center justify-center py-3 px-1 rounded-xl bg-surface-container-high text-on-surface-variant transition-all text-center border border-slate-800" data-desc="16 jugadores" data-val="F8" type="button">
+                            <span class="font-syne text-lg text-on-surface leading-none mb-1">F8</span>
+                            <span class="text-[9px] uppercase leading-tight font-bold">8 vs 8</span>
+                        </button>
+                        <button class="format-btn flex flex-col items-center justify-center py-3 px-1 rounded-xl bg-surface-container-high text-on-surface-variant transition-all text-center border border-slate-800" data-desc="22 jugadores" data-val="F11" type="button">
+                            <span class="font-syne text-lg text-on-surface leading-none mb-1">F11</span>
+                            <span class="text-[9px] uppercase leading-tight font-bold">Cancha 11</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Contador de Jugadores Faltantes (Stepper Hero Block) -->
+                <div class="bg-surface-container p-4 rounded-xl flex flex-col gap-3 shadow-md border border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-xs uppercase text-on-surface block font-bold">Cupos Requeridos</span>
+                            <span class="text-[11px] text-on-surface-variant">¿Cuántos jugadores te faltan hoy?</span>
+                        </div>
+                        <div class="px-2.5 py-1 rounded-full bg-primary-container/20 text-primary-container text-[10px] font-extrabold uppercase">
+                            Vacantes
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-surface-container-lowest p-3 rounded-lg border border-slate-800">
+                        <button aria-label="Restar jugador" class="w-11 h-11 rounded-lg bg-surface-container-high active:bg-surface-container text-on-surface flex items-center justify-center transition-all select-none" id="btn-minus" type="button">
+                            <span class="material-symbols-outlined text-[20px]">remove</span>
+                        </button>
+                        <div class="flex flex-col items-center">
+                            <div class="flex items-baseline gap-1.5">
+                                <!-- Input oculto para enviar los faltantes reales a Django -->
+                                <input type="hidden" name="jugadores_faltantes" id="id_jugadores_faltantes" value="2">
+                                <span class="font-syne text-2xl text-primary-container font-extrabold leading-none tracking-tight" id="player-count">2</span>
+                                <span class="font-syne text-sm uppercase text-on-surface font-bold">Faltantes</span>
+                            </div>
+                            <span class="text-[10px] uppercase text-on-surface-variant tracking-wider mt-0.5" id="squad-balance-label">
+                                Faltan 2 para completar el equipo
+                            </span>
+                        </div>
+                        <button aria-label="Sumar jugador" class="w-11 h-11 rounded-lg bg-surface-container-high active:bg-surface-container text-on-surface flex items-center justify-center transition-all select-none" id="btn-plus" type="button">
+                            <span class="material-symbols-outlined text-[20px]">add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Selector de Nivel de Juego (Con input oculto) -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-xs font-bold uppercase text-on-surface flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[18px] text-primary-container">speed</span>
+                        Nivel del Partido
+                    </label>
+                    <input type="hidden" name="nivel" id="id_nivel" value="Intermedio">
+                    
+                    <div class="grid grid-cols-3 gap-2" id="level-picker">
+                        <button class="level-btn p-3 rounded-xl bg-surface-container-high text-on-surface-variant flex flex-col items-center gap-1.5 text-center transition-all border border-slate-800" data-level="Recreativo" type="button">
+                            <span class="material-symbols-outlined text-[20px] text-tertiary-fixed-dim">sports_bar</span>
+                            <span class="text-xs font-bold text-on-surface">Recreativo</span>
+                            <span class="text-[9px] text-on-surface-variant leading-none">Pase y relax</span>
+                        </button>
+                        <button class="level-btn p-3 rounded-xl bg-primary-container text-on-primary flex flex-col items-center gap-1.5 text-center transition-all shadow-md border border-primary-container" data-level="Intermedio" type="button">
+                            <span class="material-symbols-outlined text-[20px] text-on-primary" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+                            <span class="text-xs font-extrabold text-on-primary">Intermedio</span>
+                            <span class="text-[9px] text-on-primary leading-none opacity-90">Ritmo parejo</span>
+                        </button>
+                        <button class="level-btn p-3 rounded-xl bg-surface-container-high text-on-surface-variant flex flex-col items-center gap-1.5 text-center transition-all border border-slate-800" data-level="Competitivo" type="button">
+                            <span class="material-symbols-outlined text-[20px] text-error">local_fire_department</span>
+                            <span class="text-xs font-bold text-on-surface">Pierna Fuerte</span>
+                            <span class="text-[9px] text-on-surface-variant leading-none">A ganar o morir</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. Superficie de la Cancha (Con input oculto) -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-xs font-bold uppercase text-on-surface flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[18px] text-primary-container">grass</span>
+                        Superficie de la Cancha
+                    </label>
+                    <input type="hidden" name="superficie" id="id_superficie" value="Césped Sintético">
+                    
+                    <div class="grid grid-cols-2 gap-2" id="surface-picker">
+                        <button class="surf-btn p-3 rounded-xl bg-primary-container text-on-primary flex items-center gap-2.5 transition-all text-left border border-primary-container" data-surf="Césped Sintético" type="button">
+                            <span class="material-symbols-outlined text-[20px] text-on-primary">texture</span>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold text-on-primary leading-tight">Césped Sintético</span>
+                                <span class="text-[9px] text-on-primary opacity-80 leading-none">Caucho o césped pro</span>
+                            </div>
+                        </button>
+                        <button class="surf-btn p-3 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center gap-2.5 transition-all text-left border border-slate-800" data-surf="Césped Natural" type="button">
+                            <span class="material-symbols-outlined text-[20px] text-on-surface-variant">park</span>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold text-on-surface leading-tight">Césped Natural</span>
+                                <span class="text-[9px] text-on-surface-variant leading-none">Cancha abierta</span>
+                            </div>
+                        </button>
+                        <button class="surf-btn p-3 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center gap-2.5 transition-all text-left border border-slate-800" data-surf="Parquet Flotante" type="button">
+                            <span class="material-symbols-outlined text-[20px] text-on-surface-variant">grid_view</span>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold text-on-surface leading-tight">Parquet Flotante</span>
+                                <span class="text-[9px] text-on-surface-variant leading-none">Futsal AFA</span>
+                            </div>
+                        </button>
+                        <button class="surf-btn p-3 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center gap-2.5 transition-all text-left border border-slate-800" data-surf="Cemento" type="button">
+                            <span class="material-symbols-outlined text-[20px] text-on-surface-variant">dashboard</span>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold text-on-surface leading-tight">Cemento / Playa</span>
+                                <span class="text-[9px] text-on-surface-variant leading-none">Suela lisa</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 6. Nombre del Complejo y Zona -->
+                <div class="flex flex-col gap-3">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-bold uppercase text-on-surface flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[18px] text-primary-container">stadium</span>
+                            Nombre del Complejo o Predio
+                        </label>
+                        <div class="relative flex items-center">
+                            <span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant text-[20px] pointer-events-none">pin_drop</span>
+                            <input name="cancha_nombre" class="w-full bg-surface-container-high text-on-surface placeholder:text-on-surface-variant/50 pl-11 pr-4 py-3.5 rounded-xl text-xs outline-none focus:bg-surface-container-highest transition-colors shadow-inner border border-slate-800" placeholder="Ej: Complejo Humboldt, Cancha 2" required type="text"/>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-bold uppercase text-on-surface flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[18px] text-primary-container">radar</span>
+                            Zona / Barrio (Para el radar de jugadores)
+                        </label>
+                        <div class="relative flex items-center">
+                            <span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant text-[20px] pointer-events-none">location_searching</span>
+                            <input name="zona" id="zone-input" class="w-full bg-surface-container-high text-on-surface placeholder:text-on-surface-variant/50 pl-11 pr-4 py-3.5 rounded-xl text-xs outline-none focus:bg-surface-container-highest transition-colors shadow-inner border border-slate-800" required type="text" value="Zona Oeste / Rafael Castillo"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Precio por Jugador -->
+                <div class="bg-surface-container p-4 rounded-xl flex flex-col gap-3 shadow-md border border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold uppercase text-on-surface flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[18px] text-primary-container">payments</span>
+                            Cuota por Jugador ($ARS)
+                        </label>
+                        <span class="text-[10px] text-tertiary-fixed-dim uppercase font-bold">Sin comisión extra</span>
+                    </div>
+                    <div class="relative flex items-center">
+                        <span class="absolute left-3.5 font-syne text-lg text-primary-container font-extrabold">$</span>
+                        <input name="precio_por_jugador" id="price-input" class="w-full bg-surface-container-lowest text-on-surface text-base font-syne font-bold pl-10 pr-4 py-3 rounded-xl outline-none focus:bg-surface-container-high transition-colors border border-slate-800" step="500" type="number" value="3500"/>
+                    </div>
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="text-xs text-on-surface-variant flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[15px] text-on-surface-variant">account_balance_wallet</span>
+                            Total cancha estimado:
+                        </span>
+                        <span class="text-xs text-primary-container font-extrabold" id="total-revenue-label">
+                            $49.000 ARS (14 jug.)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 8. Switch Partido Mixto -->
+                <div class="bg-surface-container-high p-4 rounded-xl flex items-center justify-between gap-3 shadow-sm border border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px]">diversity_3</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xs text-on-surface font-bold">Partido Mixto</span>
+                            <span class="text-[10px] text-on-surface-variant leading-tight">Hombres y mujeres bienvenidos a jugar</span>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer select-none">
+                        <input name="es_mixto" checked class="sr-only peer" id="toggle-mixto" type="checkbox"/>
+                        <div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container peer-checked:after:bg-on-primary"></div>
+                    </label>
+                </div>
+
+                <!-- 9. Botón CTA Final (Envía el formulario a Django) -->
+                <div class="flex flex-col gap-2 pt-2">
+                    <button class="w-full bg-primary-container text-on-primary font-syne text-sm uppercase py-4 px-6 rounded-xl flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-transform font-extrabold" id="btn-publicar" type="submit">
+                        <span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+                        <span>Publicar Convocatoria Ahora</span>
+                        <span class="material-symbols-outlined text-[18px]">sports_soccer</span>
+                    </button>
+                    <div class="flex items-center justify-center gap-1.5 text-center text-on-surface-variant py-1">
+                        <span class="material-symbols-outlined text-[15px] text-primary-container">notifications_active</span>
+                        <span class="text-[11px]">Se notificará automáticamente a los jugadores con radar activo en tu zona.</span>
+                    </div>
+                </div>
+
+                <!-- 10. Legal & Fair Play Assurance -->
+                <div class="flex items-center justify-center gap-2 py-3 px-2 bg-surface-container-high/40 rounded-xl text-center border border-slate-800/60">
+                    <span class="material-symbols-outlined text-[16px] text-on-surface-variant shrink-0">verified_user</span>
+                    <span class="text-[10px] text-on-surface-variant leading-snug">
+                        Compromiso Comunitario <strong>Fair Play</strong>. Protección de Datos conforme a la Ley Nac. N° 25.326.
+                    </span>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Script de Interactividad Dinámica -->
+    <script>
+        (function initMatchCreator() {
+            let currentPlayersNeeded = 2;
+            let currentTotalPlayers = 14;
+
+            const countElem = document.getElementById('player-count');
+            const hiddenFaltantes = document.getElementById('id_jugadores_faltantes');
+            const balanceElem = document.getElementById('squad-balance-label');
+            const priceInput = document.getElementById('price-input');
+            const revenueLabel = document.getElementById('total-revenue-label');
+            const btnMinus = document.getElementById('btn-minus');
+            const btnPlus = document.getElementById('btn-plus');
+
+            function updateCalculations() {
+                countElem.innerText = currentPlayersNeeded;
+                hiddenFaltantes.value = currentPlayersNeeded;
+                balanceElem.innerText = `Faltan ${currentPlayersNeeded} para completar el equipo`;
+
+                const priceVal = parseInt(priceInput.value, 10) || 0;
+                const totalRev = priceVal * currentTotalPlayers;
+                revenueLabel.innerText = `$${totalRev.toLocaleString('es-AR')} ARS (${currentTotalPlayers} jug.)`;
+            }
+
+            btnMinus.addEventListener('click', () => {
+                if (currentPlayersNeeded > 1) {
+                    currentPlayersNeeded--;
+                    updateCalculations();
+                }
+            });
+
+            btnPlus.addEventListener('click', () => {
+                if (currentPlayersNeeded < (currentTotalPlayers - 1)) {
+                    currentPlayersNeeded++;
+                    updateCalculations();
+                }
+            });
+
+            priceInput.addEventListener('input', updateCalculations);
+
+            // Format Picker (Modalidad F5, F7, F8, F11)
+            const formatBtns = document.querySelectorAll('.format-btn');
+            const hiddenModalidad = document.getElementById('id_modalidad');
+            const hintLabel = document.getElementById('selected-modality-hint');
+
+            formatBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    formatBtns.forEach(b => {
+                        b.className = "format-btn flex flex-col items-center justify-center py-3 px-1 rounded-xl bg-surface-container-high text-on-surface-variant transition-all text-center border border-slate-800";
+                    });
+                    btn.className = "format-btn flex flex-col items-center justify-center py-3 px-1 rounded-xl bg-primary-container text-on-primary transition-all text-center shadow-lg border border-primary-container";
+                    
+                    const modality = btn.getAttribute('data-val');
+                    const desc = btn.getAttribute('data-desc');
+                    hiddenModalidad.value = modality;
+                    hintLabel.innerText = desc;
+
+                    if (modality === 'F5') currentTotalPlayers = 10;
+                    if (modality === 'F7') currentTotalPlayers = 14;
+                    if (modality === 'F8') currentTotalPlayers = 16;
+                    if (modality === 'F11') currentTotalPlayers = 22;
+
+                    if (currentPlayersNeeded >= currentTotalPlayers) {
+                        currentPlayersNeeded = Math.floor(currentTotalPlayers / 2);
+                    }
+                    updateCalculations();
+                });
+            });
+
+            // Level Picker
+            const levelBtns = document.querySelectorAll('.level-btn');
+            const hiddenNivel = document.getElementById('id_nivel');
+            levelBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    levelBtns.forEach(b => {
+                        b.className = "level-btn p-3 rounded-xl bg-surface-container-high text-on-surface-variant flex flex-col items-center gap-1.5 text-center transition-all border border-slate-800";
+                    });
+                    btn.className = "level-btn p-3 rounded-xl bg-primary-container text-on-primary flex flex-col items-center gap-1.5 text-center transition-all shadow-md border border-primary-container";
+                    hiddenNivel.value = btn.getAttribute('data-level');
+                });
+            });
+
+            // Surface Picker
+            const surfBtns = document.querySelectorAll('.surf-btn');
+            const hiddenSuperficie = document.getElementById('id_superficie');
+            surfBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    surfBtns.forEach(b => {
+                        b.className = "surf-btn p-3 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center gap-2.5 transition-all text-left border border-slate-800";
+                    });
+                    btn.className = "surf-btn p-3 rounded-xl bg-primary-container text-on-primary flex items-center gap-2.5 transition-all text-left border border-primary-container";
+                    hiddenSuperficie.value = btn.getAttribute('data-surf');
+                });
+            });
+
+            updateCalculations();
+        })();
+    </script>
+</body>
+</html>

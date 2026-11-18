@@ -1,0 +1,252 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <title>Fulbo Match - Iniciar Sesión</title>
+    <!-- Google Material Symbols & Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffffff",
+                        "primary-fixed": "#c3f400",
+                        "primary-fixed-dim": "#abd600",
+                        "on-primary-fixed": "#161e00",
+                        "surface": "#0c1324",
+                        "surface-container": "#191f31",
+                        "surface-container-low": "#151b2d",
+                        "surface-container-high": "#23293c",
+                        "surface-container-highest": "#2e3447",
+                        "surface-container-lowest": "#070d1f",
+                        "on-surface": "#dce1fb",
+                        "on-surface-variant": "#c4c9ac",
+                        "secondary": "#bcc7de",
+                        "tertiary-fixed-dim": "#7bd0ff",
+                        "outline": "#8e9379"
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0c1324; color: #dce1fb; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        ::-webkit-scrollbar { display: none; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+        /* Estilos de compatibilidad para errores de formulario de Django si existieran */
+        ul.errorlist { color: #ffb4ab; font-size: 11px; list-style-type: none; padding: 0; margin-top: 0.25rem; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
+
+    <!-- Header Fijo Superior -->
+    <header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+        <div class="h-16 max-w-[440px] mx-auto px-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <button aria-label="Volver" class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary-fixed transition-colors focus:outline-none" onclick="history.back()" type="button">
+                    <span class="material-symbols-outlined text-[22px]">arrow_back</span>
+                </button>
+                <div class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-primary-fixed text-[20px]">sports_soccer</span>
+                    <span class="font-syne text-[18px] font-bold text-on-surface tracking-tight uppercase">Fulbo<span class="text-primary-fixed">Match</span></span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">person</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 flex flex-col relative w-full max-w-[440px] mx-auto px-4 pt-20 pb-safe bg-surface">
+        <div class="flex flex-col w-full pb-8">
+            
+            <!-- Tarjeta de Bienvenida con Efecto Neón -->
+            <div class="relative w-full overflow-hidden rounded-2xl bg-surface-container-lowest p-4 shadow-2xl mb-4 border border-slate-800/60">
+                <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-primary-fixed/15 blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-16 -left-12 w-36 h-36 rounded-full bg-tertiary-fixed-dim/10 blur-2xl pointer-events-none"></div>
+                
+                <div class="flex items-center justify-between mb-4 relative z-10">
+                    <button class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary-fixed transition-colors py-1 px-2.5 rounded-lg bg-surface-container-high/60 active:scale-95 text-xs font-bold" onclick="history.back()" type="button">
+                        <span class="material-symbols-outlined text-[15px]">arrow_back</span>
+                        <span>Volver</span>
+                    </button>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-primary-fixed text-[10px] font-extrabold uppercase shadow-sm">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-fixed opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-fixed"></span>
+                        </span>
+                        <span>Partidos activos hoy</span>
+                    </div>
+                </div>
+
+                <div class="relative z-10 flex flex-col items-center text-center pt-1 pb-2">
+                    <div class="relative mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-surface-container-highest flex items-center justify-center shadow-lg relative z-10">
+                            <span class="material-symbols-outlined text-[30px] text-primary-fixed animate-pulse">sports_soccer</span>
+                        </div>
+                        <div class="absolute -inset-1 rounded-2xl bg-primary-fixed opacity-30 blur-sm"></div>
+                    </div>
+                    <span class="text-[10px] font-extrabold text-primary-fixed tracking-widest uppercase mb-1">
+                        El Tinder del Fútbol
+                    </span>
+                    <h1 class="font-syne text-[22px] font-bold text-on-surface tracking-tight mb-1">
+                        ¡Hola de nuevo, crack! 
+                    </h1>
+                    <p class="text-xs text-on-surface-variant max-w-[300px]">
+                        Ingresá a tu cuenta para no perderte ningún fulbito.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Main Login Card (Formulario Django) -->
+            <div class="bg-surface-container rounded-2xl p-4 shadow-xl flex flex-col gap-4 relative overflow-hidden border border-slate-800/60">
+                <div class="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-primary-fixed/40 to-transparent"></div>
+                
+                <form class="flex flex-col gap-4" id="fulboLoginForm" method="POST">
+                    {% csrf_token %}
+
+                    <!-- Campo Username / Email -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-bold text-on-surface flex items-center justify-between" for="id_username">
+                            <span class="flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[15px] text-primary-fixed">alternate_email</span>
+                                Usuario o Email
+                            </span>
+                            <span class="text-[10px] text-on-surface-variant">F5 / F7 / F11</span>
+                        </label>
+                        <div class="relative rounded-xl bg-surface-container-low transition-all duration-200 focus-within:bg-surface-container-lowest border border-slate-800">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+                                <span class="material-symbols-outlined text-[18px]">person</span>
+                            </div>
+                            <input autocomplete="username" class="w-full bg-transparent pl-10 pr-4 py-3 text-xs text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none rounded-xl focus:shadow-[0_0_0_2px_#c3f400] transition-all" id="id_username" name="username" placeholder="Ej: nico_el10 o nico@gmail.com" required="" type="text"/>
+                        </div>
+                    </div>
+
+                    <!-- Campo Password -->
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-on-surface flex items-center gap-1.5" for="id_password">
+                                <span class="material-symbols-outlined text-[15px] text-primary-fixed">lock</span>
+                                Contraseña
+                            </label>
+                        </div>
+                        <div class="relative rounded-xl bg-surface-container-low transition-all duration-200 focus-within:bg-surface-container-lowest border border-slate-800">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+                                <span class="material-symbols-outlined text-[18px]">key</span>
+                            </div>
+                            <input autocomplete="current-password" class="w-full bg-transparent pl-10 pr-11 py-3 text-xs text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none rounded-xl focus:shadow-[0_0_0_2px_#c3f400] transition-all" id="id_password" name="password" placeholder="••••••••••••" required="" type="password"/>
+                            <button aria-label="Alternar visibilidad" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-on-surface-variant hover:text-primary-fixed focus:outline-none transition-colors" id="togglePasswordBtn" onclick="togglePasswordVisibility()" type="button">
+                                <span class="material-symbols-outlined text-[18px]" id="passwordIcon">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Row: Recordarme y Olvidaste -->
+                    <div class="flex items-center justify-between pt-1">
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input checked="" class="sr-only peer" id="id_remember_me" name="remember_me" type="checkbox"/>
+                            <div class="w-4 h-4 rounded bg-surface-container-high peer-checked:bg-primary-fixed flex items-center justify-center transition-colors">
+                                <span class="material-symbols-outlined text-[12px] text-on-primary-fixed opacity-0 peer-checked:opacity-100 font-bold transition-opacity">check</span>
+                            </div>
+                            <span class="text-xs text-secondary hover:text-on-surface transition-colors">Recordarme en este celu</span>
+                        </label>
+                        <a class="text-[11px] font-bold text-primary-fixed hover:underline transition-all" href="#">
+                            ¿La olvidaste?
+                        </a>
+                    </div>
+
+                    <!-- Botón Principal de Ingreso -->
+                    <button class="w-full mt-1 py-3.5 px-4 rounded-xl bg-primary-fixed text-on-primary-fixed font-syne font-extrabold text-xs tracking-tight uppercase flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(195,244,0,0.35)] active:scale-[0.98] hover:bg-primary-fixed-dim transition-all" id="loginSubmitBtn" type="submit">
+                        <span class="material-symbols-outlined text-[18px]">bolt</span>
+                        <span>Ingresar a la Cancha</span>
+                    </button>
+                </form>
+
+                <!-- Separador -->
+                <div class="relative flex items-center justify-center my-2">
+                    <div class="w-full h-px bg-surface-variant"></div>
+                    <span class="absolute px-3 bg-surface-container text-on-surface-variant text-[10px] uppercase font-bold tracking-wider">
+                        O continuá con
+                    </span>
+                </div>
+
+                <!-- Botón Google OAuth (Conexión real con allauth) -->
+                <a href="{% provider_login_url 'google' %}" class="w-full py-3 px-4 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface text-xs font-bold flex items-center justify-center gap-2.5 transition-colors active:scale-[0.98] shadow-sm border border-slate-800">
+                    <svg aria-hidden="true" class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                        <path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" fill="#4285F4"></path>
+                        <path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z" fill="#34A853"></path>
+                        <path d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.99 0 12s.45 3.83 1.25 5.42l4.03-3.15z" fill="#FBBC05"></path>
+                        <path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" fill="#EA4335"></path>
+                    </svg>
+                    <span>Continuar con Google</span>
+                </a>
+            </div>
+
+            <!-- Comunidad Verificada Micro-Card -->
+            <div class="mt-4 p-3 rounded-xl bg-surface-container-low flex items-start gap-2.5 text-on-surface-variant border border-slate-800/40">
+                <div class="p-1 rounded-lg bg-surface-container-high text-primary-fixed shrink-0">
+                    <span class="material-symbols-outlined text-[16px]">verified_user</span>
+                </div>
+                <div class="flex flex-col text-xs">
+                    <span class="font-bold text-on-surface uppercase tracking-wider text-[10px]">
+                        Comunidad 100% Verificada
+                    </span>
+                    <p class="text-secondary text-[11px] mt-0.5">
+                        Reputación Fair Play, jugadores rankeados y canchas seguras en CABA y Gran Buenos Aires.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Enlace a Registro y Footer Legal -->
+            <div class="mt-4 flex flex-col items-center text-center gap-2">
+                <div class="flex items-center gap-1.5 text-xs text-on-surface">
+                    <span>¿Todavía no tenés cuenta?</span>
+                    <a class="font-syne font-bold text-primary-fixed hover:underline transition-all" href="{% url 'registro_usuario' %}">
+                        Registrate acá
+                    </a>
+                </div>
+                <p class="text-[10px] text-on-surface-variant/70 max-w-[280px] leading-relaxed">
+                    Protección de datos conforme a la 
+                    <a class="underline text-on-surface-variant hover:text-on-surface" href="{% url 'politica_privacidad' %}">Ley N° 25.326</a> 
+                    de la Rep. Argentina.
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Script para visibilidad de contraseña -->
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('id_password');
+            const passwordIcon = document.getElementById('passwordIcon');
+            if (!passwordInput || !passwordIcon) return;
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.textContent = 'visibility';
+            }
+        }
+    </script>
+</body>
+</html>

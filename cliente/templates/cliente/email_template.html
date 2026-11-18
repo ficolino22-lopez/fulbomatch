@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f8fafc; color: #0f172a; padding: 20px; }
+        .container { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; max-width: 600px; margin: 0 auto; }
+        h2 { color: #0f172a; border-bottom: 2px solid #CCFF00; padding-bottom: 8px; }
+        p { line-height: 1.5; color: #334155; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nueva Consulta - Fulbo Match</h2>
+        <p><strong>Nombre:</strong> {{ contacto.nombre }}</p>
+        <p><strong>Correo electrónico:</strong> {{ contacto.email }}</p>
+        <p><strong>Fecha:</strong> {{ contacto.fecha_envio|date:"d/m/Y H:i" }}</p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
+        <p><strong>Mensaje:</strong></p>
+        <p style="background: #f1f5f9; padding: 12px; border-radius: 6px;">{{ contacto.mensaje }}</p>
+    </div>
+</body>
+</html>

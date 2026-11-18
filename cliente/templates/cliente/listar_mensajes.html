@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <title>Fulbo Match - Panel Admin Mensajes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#CCFF00" },
+                    fontFamily: { syne: ['Syne', 'sans-serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>body { background-color: #020617; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="bg-slate-950 text-slate-100 flex flex-col min-h-screen w-full items-center p-4">
+
+    <div class="w-full max-w-[600px] flex flex-col gap-5 pb-10">
+        
+        <div class="flex items-center justify-between bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+            <div>
+                <h2 class="font-syne font-bold text-sm text-white uppercase">CONSULTAS RECIBIDAS</h2>
+                <p class="text-[10px] text-slate-400">Panel exclusivo para administradores (Staff)</p>
+            </div>
+            <a href="{% url 'bienvenida' %}" class="text-xs text-slate-400 hover:text-primary">← Inicio</a>
+        </div>
+
+        <div class="flex flex-col gap-3">
+            {% if mensajes %}
+                {% for m in mensajes %}
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col gap-2">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                        <span class="font-syne font-bold text-xs text-white">{{ m.nombre }} <span class="text-[10px] text-primary">({{ m.email }})</span></span>
+                        <span class="text-[10px] text-slate-500">{{ m.fecha_envio|date:"d/m/Y H:i" }}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">{{ m.mensaje }}</p>
+                </div>
+                {% endfor %}
+
+                <!-- Controles de Paginación (Requerido por consigna) -->
+                <div class="flex justify-between items-center mt-4 bg-slate-900 border border-slate-800 p-3 rounded-2xl text-xs">
+                    <div>
+                        {% if mensajes.has_previous %}
+                            <a href="?page={{ mensajes.previous_page_number }}" class="text-primary font-bold hover:underline">← Anterior</a>
+                        {% endif %}
+                    </div>
+                    <span class="text-slate-400">Página {{ mensajes.number }} de {{ mensajes.paginator.num_pages }}</span>
+                    <div>
+                        {% if mensajes.has_next %}
+                            <a href="?page={{ mensajes.next_page_number }}" class="text-primary font-bold hover:underline">Siguiente →</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% else %}
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center text-slate-500 text-xs">
+                    No hay mensajes de contacto registrados por el momento.
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>
