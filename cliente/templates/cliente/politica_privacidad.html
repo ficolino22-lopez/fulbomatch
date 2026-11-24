@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <title>Fulbo Match - Política de Privacidad</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'cliente/img/favicon.ico' %}"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#CCFF00" },
+                    fontFamily: { syne: ['Syne', 'sans-serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>body { background-color: #020617; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="bg-slate-950 text-slate-100 flex flex-col min-h-screen w-full items-center p-4">
+
+    <div class="w-full max-w-[600px] bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col gap-5 my-6">
+        
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div>
+                <h2 class="font-syne font-bold text-sm text-white uppercase">POLÍTICA DE PRIVACIDAD</h2>
+                <p class="text-[10px] text-slate-400">Conforme a la Ley N° 25.326 (Protección de Datos Personales)</p>
+            </div>
+            <a href="{% url 'index_cliente' %}" class="text-xs text-slate-400 hover:text-primary">← Volver</a>
+        </div>
+
+        <div class="flex flex-col gap-4 text-xs text-slate-300 leading-relaxed">
+            <h3 class="font-syne font-bold text-white text-sm">1. Recopilación de Información</h3>
+            <p>Fulbo Match recopila datos básicos de perfil (nombre de usuario, nombre y correo electrónico mediante registro local o autenticación OAuth) estrictamente necesarios para el funcionamiento del sistema de matchmaking deportivo.</p>
+
+            <h3 class="font-syne font-bold text-white text-sm">2. Finalidad del Tratamiento y Seguridad</h3>
+            <p>Los datos son utilizados exclusivamente para conectar jugadores con organizadores de partidos, gestionar postulaciones a planteles y coordinar encuentros en la República Argentina. No comercializamos ni cedemos datos personales a terceros con fines publicitarios.</p>
+
+            <h3 class="font-syne font-bold text-white text-sm">3. Derechos ARCO (Ley N° 25.326)</h3>
+            <p>En cumplimiento de la Ley N° 25.326 de Protección de Datos Personales de la República Argentina, como titular de los datos podés ejercer de forma gratuita tus derechos ARCO:</p>
+            <ul class="list-disc pl-5 space-y-1 text-slate-300">
+                <li><strong class="text-white">Acceso:</strong> solicitar información sobre los datos personales almacenados en tu cuenta (de forma gratuita en intervalos no inferiores a seis meses, salvo interés legítimo acreditado).</li>
+                <li><strong class="text-white">Rectificación:</strong> pedir la actualización o corrección de datos inexactos o desactualizados.</li>
+                <li><strong class="text-white">Cancelación / Supresión:</strong> solicitar la baja o eliminación de tus datos personales cuando ya no sean necesarios para la finalidad con la que fueron recopilados.</li>
+                <li><strong class="text-white">Oposición:</strong> oponerte al tratamiento de tus datos por motivos legítimos y fundados.</li>
+            </ul>
+            <p>Para ejercer cualquiera de estos derechos, podés escribirnos directamente desde la sección <a href="{% url 'contacto' %}" class="text-primary underline font-semibold">Contacto / Soporte</a>.</p>
+
+            <h3 class="font-syne font-bold text-white text-sm">4. Autoridad de Control</h3>
+            <p>La Agencia de Acceso a la Información Pública, en su carácter de Órgano de Control de la Ley N° 25.326, tiene la atribución de atender las denuncias y reclamos que interpongan quienes resulten afectados en sus derechos por incumplimiento de las normas vigentes en materia de protección de datos personales.</p>
+        </div>
+
+        <div class="border-t border-slate-800 pt-4 text-center">
+            <a href="{% url 'index_cliente' %}" class="inline-block py-3 px-6 bg-primary text-slate-950 font-syne font-extrabold text-xs rounded-xl shadow-lg hover:bg-lime-400 transition-all">
+                Entendido, volver a la app
+            </a>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <title>Fulbo Match - Seleccionar Perfil</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'cliente/img/favicon.ico' %}"/>
+    <!-- Google Material Symbols & Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffffff",
+                        "primary-fixed": "#c3f400",
+                        "primary-fixed-dim": "#abd600",
+                        "on-primary-fixed": "#161e00",
+                        "surface": "#0c1324",
+                        "surface-container": "#191f31",
+                        "surface-container-low": "#151b2d",
+                        "surface-container-high": "#23293c",
+                        "surface-container-highest": "#2e3447",
+                        "surface-container-lowest": "#070d1f",
+                        "on-surface": "#dce1fb",
+                        "on-surface-variant": "#c4c9ac",
+                        "secondary": "#bcc7de",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "outline": "#8e9379"
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0c1324; color: #dce1fb; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        ::-webkit-scrollbar { display: none; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex justify-center min-h-screen">
+
+    <!-- Contenedor móvil principal (Max width 440px) -->
+    <div class="w-full max-w-[440px] relative flex flex-col min-h-screen bg-surface">
+        
+        <!-- Header Fijo Superior -->
+        <header class="fixed top-0 w-full max-w-[440px] z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)] pt-safe">
+            <div class="h-16 px-4 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                    <button aria-label="Volver" class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface hover:text-primary-fixed transition-colors active:scale-95" onclick="history.back()" type="button">
+                        <span class="material-symbols-outlined text-[22px]">arrow_back</span>
+                    </button>
+                    <div class="flex items-center tracking-tight leading-none select-none">
+                        <span class="font-syne text-[18px] text-primary font-bold">FULBO</span>
+                        <span class="font-syne text-[18px] text-primary-fixed font-extrabold ml-1">MATCH</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="{% url 'logout' %}" aria-label="Cerrar sesión" class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:text-error transition-colors active:scale-95">
+                        <span class="material-symbols-outlined text-[20px]">logout</span>
+                    </a>
+                    
+                    <!-- Avatar del Usuario en el Header -->
+                    {% if request.user.is_authenticated and request.user.perfil.foto_url %}
+                        <img src="{{ request.user.perfil.foto_url }}" alt="{{ request.user.username }}" class="w-9 h-9 rounded-full object-cover shadow-sm border border-primary-fixed/40"/>
+                    {% else %}
+                        <div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center shadow-[0_0_12px_rgba(195,244,0,0.2)] text-on-primary-fixed font-bold">
+                            <span class="material-symbols-outlined text-[16px]">person</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenido Principal -->
+        <main class="flex flex-col relative w-full px-4 pt-20 pb-safe bg-surface flex-1">
+            <div class="flex flex-col w-full pb-8">
+                
+                <!-- Tarjeta de Perfil Rápido Activo -->
+                <section class="w-full mb-4">
+                    <div class="bg-surface-container rounded-xl p-4 shadow-lg relative overflow-hidden border border-slate-800/60">
+                        <div class="absolute -right-8 -top-8 w-28 h-28 bg-primary-fixed/10 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="flex items-center justify-between gap-3 relative z-10">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="relative flex-shrink-0">
+                                    <div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high shadow-md">
+                                        {% if request.user.is_authenticated and request.user.perfil.foto_url %}
+                                            <img class="w-full h-full object-cover" src="{{ request.user.perfil.foto_url }}" alt="Avatar"/>
+                                        {% else %}
+                                            <div class="w-full h-full bg-surface-container-high flex items-center justify-center text-primary-fixed font-bold">
+                                                ⚽
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-primary-fixed rounded-full ring-2 ring-surface-container flex items-center justify-center">
+                                        <span class="w-1.5 h-1.5 bg-surface-container-lowest rounded-full animate-ping"></span>
+                                    </span>
+                                </div>
+                                <div class="flex flex-col min-w-0">
+                                    <div class="flex items-center gap-1.5">
+                                        <h1 class="font-syne text-[18px] font-bold text-primary truncate tracking-tight">
+                                            {{ request.user.first_name|default:request.user.username }}
+                                        </h1>
+                                        <span class="material-symbols-outlined text-[15px] text-primary-fixed flex-shrink-0" title="Perfil Verificado">verified</span>
+                                    </div>
+                                    <p class="text-xs text-on-surface-variant truncate">Mediocampista #10 · Zona Oeste</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Badge Fair Play -->
+                            <div class="flex flex-col items-end flex-shrink-0">
+                                <span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-extrabold flex items-center gap-1">
+                                    <span class="text-amber-400">★</span> 4.9
+                                </span>
+                                <span class="text-[9px] text-on-surface-variant tracking-wider uppercase mt-1 font-extrabold">Fair Play</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Encabezado de Selección -->
+                <section class="w-full mb-4">
+                    <div class="flex items-baseline justify-between gap-3">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] uppercase tracking-wider text-primary-fixed font-extrabold flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-primary-fixed inline-block"></span>
+                                Ingreso Flexible
+                            </span>
+                            <h2 class="font-syne text-[20px] font-bold text-primary mt-0.5">¿CÓMO QUERÉS ENTRAR?</h2>
+                            <p class="text-xs text-on-surface-variant">Seleccioná tu rol para esta sesión</p>
+                        </div>
+                        <a aria-label="Cerrar Sesión Activa" class="group flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container-low text-error hover:bg-error-container/40 transition-colors active:scale-95 flex-shrink-0" href="{% url 'logout' %}">
+                            <span class="material-symbols-outlined text-[15px]">logout</span>
+                            <span class="text-[11px] font-bold text-error">Salir</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Tarjetas Principales de Selección de Perfil -->
+                <div aria-label="Selección de modo de juego" class="flex flex-col gap-4 w-full mb-6" role="radiogroup">
+                    
+                    <!-- 1. MODO JUGADOR -->
+                    <a aria-checked="false" class="group relative flex flex-col w-full bg-surface-container-low hover:bg-surface-container rounded-xl p-4 shadow-md transition-all duration-300 active:scale-[0.98] overflow-hidden cursor-pointer border border-slate-800/60" href="{% url 'index_cliente' %}" role="radio">
+                        <div class="absolute -right-12 -top-12 w-36 h-36 bg-primary-fixed/5 group-hover:bg-primary-fixed/15 rounded-full blur-3xl transition-all duration-300 pointer-events-none"></div>
+                        
+                        <div class="flex items-center justify-between mb-3 relative z-10">
+                            <div class="flex items-center gap-2">
+                                <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-fixed group-hover:bg-primary-fixed group-hover:text-surface-container-lowest transition-colors shadow-sm">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M2.5 15.5C2.5 15.5 3 13 6 13C8.5 13 11 15 13.5 15C16.5 15 20.5 13 21.5 16C21.5 18 19 19.5 15.5 19.5C12 19.5 5 19.5 2.5 18V15.5Z" fill="currentColor" fill-opacity="0.15"></path>
+                                        <path d="M6 13L8 9L11 9L13.5 15"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold text-primary-fixed uppercase tracking-wider block">Player Pass</span>
+                                    <h3 class="font-syne text-base font-bold text-primary group-hover:text-primary-fixed transition-colors">Modo Jugador</h3>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full bg-primary-fixed/15 text-primary-fixed text-[10px] font-extrabold flex items-center gap-1 shadow-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-primary-fixed animate-pulse"></span>
+                                Activo hoy
+                            </span>
+                        </div>
+
+                        <p class="text-xs text-on-surface mb-4 relative z-10">
+                            Explorá partidos activos y sumate a un equipo con un solo toque.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 mb-4 relative z-10">
+                            <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container text-on-surface-variant text-xs">
+                                <span class="material-symbols-outlined text-[15px] text-primary-fixed">near_me</span>
+                                <span class="truncate">Partidos cercanos</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container text-on-surface-variant text-xs">
+                                <span class="material-symbols-outlined text-[15px] text-primary-fixed">touch_app</span>
+                                <span class="truncate">Postulación 1-Tap</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-1 relative z-10">
+                            <span class="text-xs font-bold text-on-surface-variant group-hover:text-primary transition-colors flex items-center gap-1">
+                                Entrar a buscar equipo
+                            </span>
+                            <div class="w-8 h-8 rounded-full bg-surface-container-high group-hover:bg-primary-fixed flex items-center justify-center text-primary group-hover:text-surface-container-lowest transition-all group-hover:translate-x-1 shadow-sm">
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- 2. MODO HOST (ORGANIZADOR / CAPITÁN) -->
+                    <a aria-checked="false" class="group relative flex flex-col w-full bg-surface-container-low hover:bg-surface-container rounded-xl p-4 shadow-md transition-all duration-300 active:scale-[0.98] overflow-hidden cursor-pointer border border-slate-800/60" href="{% url 'panel_host' %}" role="radio">
+                        <div class="absolute -right-12 -top-12 w-36 h-36 bg-amber-400/5 group-hover:bg-amber-400/15 rounded-full blur-3xl transition-all duration-300 pointer-events-none"></div>
+                        
+                        <div class="flex items-center justify-between mb-3 relative z-10">
+                            <div class="flex items-center gap-2">
+                                <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-amber-400 group-hover:bg-amber-400 group-hover:text-surface-container-lowest transition-colors shadow-sm">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                        <rect fill="currentColor" fill-opacity="0.15" height="14" rx="3" width="18" x="3" y="5"></rect>
+                                        <text fill="currentColor" font-family="Syne, sans-serif" font-size="11" font-weight="bold" x="7.5" y="15">C</text>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold text-amber-400 uppercase tracking-wider block">Captain Hub</span>
+                                    <h3 class="font-syne text-base font-bold text-primary group-hover:text-amber-400 transition-colors">Modo Host</h3>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full bg-amber-400/15 text-amber-400 text-[10px] font-extrabold flex items-center gap-1 shadow-sm">
+                                <span class="material-symbols-outlined text-[13px]">sports</span>
+                                Capitán / DT
+                            </span>
+                        </div>
+
+                        <p class="text-xs text-on-surface mb-4 relative z-10">
+                            Armá partidos, coordiná la cancha y seleccioná a los mejores para tu formación.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 mb-4 relative z-10">
+                            <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container text-on-surface-variant text-xs">
+                                <span class="material-symbols-outlined text-[15px] text-amber-400">add_circle</span>
+                                <span class="truncate">Crear F5, F7 y F11</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container text-on-surface-variant text-xs">
+                                <span class="material-symbols-outlined text-[15px] text-amber-400">how_to_reg</span>
+                                <span class="truncate">Aceptar postulantes</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-1 relative z-10">
+                            <span class="text-xs font-bold text-on-surface-variant group-hover:text-primary transition-colors flex items-center gap-1">
+                                Abrir panel de organizador
+                            </span>
+                            <div class="w-8 h-8 rounded-full bg-surface-container-high group-hover:bg-amber-400 flex items-center justify-center text-primary group-hover:text-surface-container-lowest transition-all group-hover:translate-x-1 shadow-sm">
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Aclaración de Flexibilidad de Rol -->
+                <div class="w-full bg-surface-container-lowest rounded-xl p-3 mb-6 flex items-start gap-3 border border-slate-800/60">
+                    <div class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-primary-fixed flex-shrink-0 mt-0.5">
+                        <span class="material-symbols-outlined text-[14px]">sync_alt</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant leading-relaxed">
+                        <strong class="text-on-surface font-semibold">Podés alternar en cualquier momento:</strong> Cambiá de Jugador a Host desde tu perfil sin perder historial ni estadísticas acumuladas.
+                    </p>
+                </div>
+
+                <!-- Accesos Rápidos Complementarios -->
+                <section class="w-full mb-6">
+                    <span class="text-[10px] text-on-surface-variant uppercase tracking-wider mb-2 block font-extrabold">
+                        Accesos rápidos guardados
+                    </span>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a class="flex flex-col p-3 rounded-xl bg-surface-container hover:bg-surface-container-high transition-colors text-left group border border-slate-800/60" href="{% url 'mis_solicitudes' %}">
+                            <div class="flex items-center justify-between text-on-surface-variant group-hover:text-primary-fixed mb-1">
+                                <span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+                                <span class="text-[9px] px-1.5 py-0.5 rounded bg-surface-container-highest text-primary font-bold">Activas</span>
+                            </div>
+                            <span class="text-xs font-bold text-primary">Mis Postulaciones</span>
+                            <span class="text-[10px] text-on-surface-variant truncate">Estado de aceptación</span>
+                        </a>
+                        <a class="flex flex-col p-3 rounded-xl bg-surface-container hover:bg-surface-container-high transition-colors text-left group border border-slate-800/60" href="{% url 'index_cliente' %}">
+                            <div class="flex items-center justify-between text-on-surface-variant group-hover:text-primary-fixed mb-1">
+                                <span class="material-symbols-outlined text-[18px]">explore</span>
+                                <span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+                            </div>
+                            <span class="text-xs font-bold text-primary">Radar Zona Oeste</span>
+                            <span class="text-[10px] text-on-surface-variant truncate">Partidos en curso</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Pie Institucional y Marco Legal -->
+                <footer class="w-full flex flex-col items-center text-center gap-1.5 pt-2 text-on-surface-variant/70">
+                    <div class="flex items-center justify-center gap-1.5">
+                        <span class="material-symbols-outlined text-[13px]">shield</span>
+                        <span class="text-[10px] font-bold">Protección de Datos Garantizada</span>
+                    </div>
+                    <p class="text-[9px] leading-tight max-w-[300px]">
+                        Tus datos están protegidos conforme a la <span class="text-on-surface-variant">Ley N° 25.326</span> de la República Argentina.
+                    </p>
+                    <div class="flex items-center gap-3 mt-1 text-[10px]">
+                        <a class="hover:text-primary-fixed transition-colors" href="{% url 'terminos_condiciones' %}">Términos</a>
+                        <span>•</span>
+                        <a class="hover:text-primary-fixed transition-colors" href="{% url 'politica_privacidad' %}">Privacidad</a>
+                    </div>
+                </footer>
+
+            </div>
+        </main>
+    </div>
+</body>
+</html>

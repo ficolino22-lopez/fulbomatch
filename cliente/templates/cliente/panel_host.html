@@ -1,0 +1,299 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <title>Fulbo Match - Panel de Host</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'cliente/img/favicon.ico' %}"/>
+    <!-- Google Material Symbols & Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffffff",
+                        "primary-container": "#c3f400",
+                        "on-primary-fixed": "#161e00",
+                        "surface": "#0c1324",
+                        "surface-container": "#191f31",
+                        "surface-container-low": "#151b2d",
+                        "surface-container-high": "#23293c",
+                        "surface-container-highest": "#2e3447",
+                        "surface-container-lowest": "#070d1f",
+                        "on-surface": "#dce1fb",
+                        "secondary": "#bcc7de",
+                        "outline": "#8e9379"
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #070d1f; color: #dce1fb; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        ::-webkit-scrollbar { display: none; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface flex justify-center min-h-screen">
+
+    <!-- Contenedor móvil principal (Max width 440px) -->
+    <div class="w-full max-w-[440px] relative flex flex-col min-h-screen bg-surface">
+        
+        <!-- Header Fijo Superior -->
+        <header class="fixed top-0 w-full max-w-[440px] z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_4px_20px_rgba(7,13,31,0.6)]">
+            <div class="h-16 px-4 flex items-center justify-between">
+                <div class="flex flex-col justify-center select-none">
+                    <span class="font-syne text-[20px] font-extrabold tracking-tight text-primary-container leading-none uppercase drop-shadow-[0_0_12px_rgba(195,244,0,0.35)]">FULBO MATCH</span>
+                    <span class="text-[10px] text-secondary tracking-widest uppercase mt-0.5 opacity-80 font-bold">Tinder del Fútbol</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="{% url 'mis_solicitudes' %}" aria-label="Notificaciones" class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:text-primary-container transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">notifications</span>
+                    </a>
+                    <a href="{% url 'seleccion_perfil' %}" aria-label="Perfil" class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-on-primary-fixed select-none shadow-sm">
+                        <span class="material-symbols-outlined text-[18px]">person</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenido Principal -->
+        <main class="flex-1 flex flex-col relative w-full pt-20 pb-28 px-4 bg-surface">
+            
+            <!-- Mensajes Flash de Django -->
+            {% if messages %}
+                <div class="flex flex-col gap-2 mb-4">
+                    {% for message in messages %}
+                        <div class="p-3 rounded-xl bg-primary-container/10 border border-primary-container/30 text-primary-container text-xs font-medium text-center shadow-inner">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Dynamic Host Summary Header -->
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-1.5">
+                        <span class="inline-block w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_rgba(195,244,0,0.8)] animate-pulse"></span>
+                        <span class="text-[10px] uppercase tracking-wider text-primary-container font-extrabold">Modo Organizador</span>
+                    </div>
+                    <h1 class="font-syne text-[24px] font-bold text-on-surface tracking-tight">Panel de Host</h1>
+                </div>
+                <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-secondary">
+                    <span class="material-symbols-outlined text-[16px] text-primary-container" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    <span class="text-[11px] font-bold text-on-surface">Nivel Pro</span>
+                </div>
+            </div>
+
+            <!-- Key Metrics Bento Grid -->
+            <div class="grid grid-cols-3 gap-2 mb-5">
+                <div class="bg-surface-container-low rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-md border border-slate-800/40">
+                    <span class="font-syne text-xl font-extrabold text-primary-container leading-none">{{ mis_partidos|length }}</span>
+                    <span class="text-[10px] text-secondary mt-1 font-medium">Partidos Creados</span>
+                </div>
+                <div class="bg-surface-container-low rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-md relative overflow-hidden border border-slate-800/40">
+                    <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary-container/10 blur-sm"></div>
+                    <span class="font-syne text-xl font-extrabold text-on-surface leading-none flex items-center">
+                        {{ solicitudes|length }}
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary-container ml-0.5 animate-ping"></span>
+                    </span>
+                    <span class="text-[10px] text-secondary mt-1 font-medium">Solicitudes</span>
+                </div>
+                <div class="bg-surface-container-low rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-md border border-slate-800/40">
+                    <span class="font-syne text-xl font-extrabold text-primary-container leading-none">98%</span>
+                    <span class="text-[10px] text-secondary mt-1 font-medium">Asistencia</span>
+                </div>
+            </div>
+
+            <!-- Main Call To Action: Create Match -->
+            <a href="{% url 'crear_partido' %}" class="w-full py-3.5 px-4 mb-6 rounded-xl bg-primary-container text-on-primary-fixed font-syne font-extrabold text-xs tracking-wide flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(195,244,0,0.35)] active:scale-[0.98] transition-all text-center uppercase">
+                <span class="material-symbols-outlined text-[20px]">add_circle</span>
+                <span>Armar Nuevo Partido</span>
+            </a>
+
+            <!-- Priority Pending Requests Section -->
+            <div class="flex flex-col mb-6">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <h2 class="font-syne text-lg font-bold text-on-surface">Solicitudes Pendientes</h2>
+                        <span class="w-5 h-5 rounded-full bg-primary-container text-on-primary-fixed text-[10px] flex items-center justify-center font-bold">{{ solicitudes|length }}</span>
+                    </div>
+                    <span class="text-[11px] text-secondary">Acción Rápida</span>
+                </div>
+
+                <div class="flex flex-col gap-2.5">
+                    {% if solicitudes %}
+                        {% for sol in solicitudes %}
+                        <div class="p-3.5 rounded-xl bg-surface-container-low flex flex-col gap-3 shadow-md border border-slate-800/50">
+                            <div class="flex items-start gap-3">
+                                <div class="w-11 h-11 rounded-xl bg-surface-container-high flex items-center justify-center text-primary-container font-bold text-sm shrink-0 shadow-inner">
+                                    ⚽
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center justify-between gap-1">
+                                        <span class="text-xs font-bold text-on-surface truncate">{{ sol.nombre_jugador }}</span>
+                                        <span class="flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-surface-container-high text-primary-container text-[10px] font-bold">
+                                            <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                            {{ sol.nivel }}
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center gap-2 mt-0.5">
+                                        <span class="text-[11px] text-secondary truncate">{{ sol.posicion }} · Postulante</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 mt-1">
+                                        <span class="material-symbols-outlined text-[13px] text-secondary">sports_soccer</span>
+                                        <span class="text-[11px] text-primary-container font-semibold truncate">{{ sol.partido.titulo }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Botones Dinámicos de Aceptar / Rechazar conectados a las URLs de Django -->
+                            <div class="grid grid-cols-2 gap-2 pt-1">
+                                <a href="{% url 'rechazar_solicitud' sol.id %}" class="h-9 rounded-lg bg-surface-container-highest text-secondary hover:text-on-surface text-xs font-bold flex items-center justify-center gap-1 active:scale-95 transition-transform">
+                                    <span class="material-symbols-outlined text-[16px]">close</span>
+                                    Rechazar
+                                </a>
+                                <a href="{% url 'aceptar_solicitud' sol.id %}" class="h-9 rounded-lg bg-primary-container text-on-primary-fixed text-xs font-extrabold flex items-center justify-center gap-1 active:scale-95 transition-transform shadow-[0_0_12px_rgba(195,244,0,0.25)]">
+                                    <span class="material-symbols-outlined text-[16px]">check</span>
+                                    Aceptar Jugador
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="p-5 rounded-xl bg-surface-container-low text-center flex flex-col items-center justify-center gap-2 border border-slate-800/40">
+                            <span class="material-symbols-outlined text-[28px] text-primary-container">done_all</span>
+                            <span class="font-syne text-sm font-bold text-on-surface">¡Todo al día!</span>
+                            <span class="text-[11px] text-secondary">No tenés solicitudes pendientes para revisar.</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Active Matches Section -->
+            <div class="flex flex-col mb-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="font-syne text-lg font-bold text-on-surface">Mis Partidos Activos</h2>
+                    <span class="text-[11px] text-primary-container font-semibold">Organizando</span>
+                </div>
+                
+                <div class="flex flex-col gap-3">
+                    {% if mis_partidos %}
+                        {% for partido in mis_partidos %}
+                        <div class="p-4 rounded-2xl bg-surface-container-low shadow-md flex flex-col gap-3 border border-slate-800/60">
+                            <div class="flex items-start justify-between gap-2">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="px-2 py-0.5 rounded-full bg-primary-container/20 text-primary-container text-[10px] font-bold uppercase">{{ partido.modalidad }}</span>
+                                        <span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary text-[10px] font-semibold">{{ partido.zona }}</span>
+                                    </div>
+                                    <h3 class="font-syne font-bold text-base text-on-surface mt-1.5">{{ partido.titulo }}</h3>
+                                    <p class="text-xs text-secondary mt-0.5">Cancha: {{ partido.cancha_nombre }} · ${{ partido.precio_por_jugador }}</p>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary-container shrink-0">
+                                    <span class="material-symbols-outlined text-[20px]">stadium</span>
+                                </div>
+                            </div>
+
+                            <!-- Roster Fill Visualizer -->
+                            <div class="bg-surface-container p-3 rounded-xl flex flex-col gap-1.5 border border-slate-800/40">
+                                <div class="flex justify-between items-center text-xs">
+                                    <span class="text-secondary">Cupos restantes / Faltantes</span>
+                                    <span class="text-primary-container font-bold">Faltan {{ partido.jugadores_faltantes }} jugadores</span>
+                                </div>
+                                <div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+                                    <div class="h-full bg-primary-container rounded-full w-3/4 shadow-[0_0_8px_rgba(195,244,0,0.6)]"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between pt-1">
+                                <div class="flex items-center gap-1 text-secondary text-xs">
+                                    <span class="material-symbols-outlined text-[15px] text-primary-container">groups</span>
+                                    <span>Convocatoria abierta</span>
+                                </div>
+                                <a href="{% url 'index_cliente' %}" class="px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:text-primary-container text-xs font-bold flex items-center gap-1 transition-colors">
+                                    <span>Ver en Feed</span>
+                                    <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="p-6 rounded-2xl bg-surface-container-low text-center text-secondary text-xs flex flex-col items-center gap-2 border border-slate-800/40">
+                            <span class="text-2xl">⚽</span>
+                            <p class="text-on-surface font-medium">Todavía no creaste ningún partido como Host.</p>
+                            <a href="{% url 'crear_partido' %}" class="text-primary-container font-bold underline">¡Armá tu primer partido ahora!</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Host Support & Help Desk Callout -->
+            <div class="p-4 rounded-2xl bg-gradient-to-r from-surface-container-high to-surface-container-low flex items-center justify-between gap-3 shadow-md mb-2 border border-slate-800/60">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary-container shrink-0">
+                        <span class="material-symbols-outlined text-[20px]">support_agent</span>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-on-surface leading-tight">¿Dudas con la organización?</h4>
+                        <p class="text-[11px] text-secondary">Soporte directo para anfitriones.</p>
+                    </div>
+                </div>
+                <a href="{% url 'contacto' %}" class="h-9 px-3 rounded-lg bg-surface-container-highest text-primary-container text-xs font-bold flex items-center gap-1 hover:bg-surface-container-high transition-colors shrink-0">
+                    <span>Consultar</span>
+                    <span class="material-symbols-outlined text-[13px]">chat</span>
+                </a>
+            </div>
+
+        </main>
+
+        <!-- Barra de Navegación Inferior Flotante (Estilo App Nativa) -->
+        <nav class="fixed bottom-0 w-full max-w-[440px] z-50 pb-safe px-4 pointer-events-none">
+            <div class="mb-3 pointer-events-auto bg-surface-container/95 backdrop-blur-2xl rounded-full p-1.5 flex items-center justify-between shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-slate-800/80">
+                
+                <!-- Explorar -->
+                <a href="{% url 'index_cliente' %}" class="flex-1 py-2 px-1 flex flex-col items-center justify-center rounded-full text-secondary hover:text-on-surface transition-all gap-0.5">
+                    <span class="material-symbols-outlined text-[20px]">sports_soccer</span>
+                    <span class="text-[10px] font-semibold tracking-tight truncate max-w-full">Explorar</span>
+                </a>
+                
+                <!-- Mis Postulaciones -->
+                <a href="{% url 'mis_solicitudes' %}" class="flex-1 py-2 px-1 flex flex-col items-center justify-center rounded-full text-secondary hover:text-on-surface transition-all gap-0.5">
+                    <span class="material-symbols-outlined text-[20px]">assignment</span>
+                    <span class="text-[10px] font-semibold tracking-tight truncate max-w-full">Postulaciones</span>
+                </a>
+                
+                <!-- Panel Host (Activo) -->
+                <a href="{% url 'panel_host' %}" class="flex-1 py-2 px-1 flex flex-col items-center justify-center rounded-full transition-all gap-0.5 relative text-primary-container bg-surface-container-high/90 shadow-[0_0_16px_rgba(195,244,0,0.25)]">
+                    <div class="relative flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[20px]">sports</span>
+                        <span class="absolute -top-1 -right-2 w-2 h-2 rounded-full bg-primary-container shadow-[0_0_6px_rgba(195,244,0,0.9)]"></span>
+                    </div>
+                    <span class="text-[10px] font-bold tracking-tight truncate max-w-full">Panel Host</span>
+                </a>
+                
+                <!-- Soporte / Contacto -->
+                <a href="{% url 'contacto' %}" class="flex-1 py-2 px-1 flex flex-col items-center justify-center rounded-full text-secondary hover:text-on-surface transition-all gap-0.5">
+                    <span class="material-symbols-outlined text-[20px]">help_center</span>
+                    <span class="text-[10px] font-semibold tracking-tight truncate max-w-full">Soporte</span>
+                </a>
+
+            </div>
+        </nav>
+
+    </div>
+</body>
+</html>

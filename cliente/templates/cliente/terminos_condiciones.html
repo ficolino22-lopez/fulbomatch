@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <title>Fulbo Match - Términos y Condiciones</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'cliente/img/favicon.ico' %}"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#CCFF00" },
+                    fontFamily: { syne: ['Syne', 'sans-serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>body { background-color: #020617; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="bg-slate-950 text-slate-100 flex flex-col min-h-screen w-full items-center p-4">
+
+    <div class="w-full max-w-[600px] bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col gap-5 my-6">
+        
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div>
+                <h2 class="font-syne font-bold text-sm text-white uppercase">TÉRMINOS Y CONDICIONES DE USO</h2>
+                <p class="text-[10px] text-slate-400">Condiciones generales de acceso y participación en Fulbo Match</p>
+            </div>
+            <a href="{% url 'index_cliente' %}" class="text-xs text-slate-400 hover:text-primary">← Volver</a>
+        </div>
+
+        <div class="flex flex-col gap-4 text-xs text-slate-300 leading-relaxed">
+            <h3 class="font-syne font-bold text-white text-sm">1. Objeto de la Plataforma</h3>
+            <p>Fulbo Match es una plataforma digital de intermediación deportiva que permite a organizadores ("Hosts") publicar partidos de fútbol amateur y a jugadores postularse para completar cupos disponibles en CABA y Gran Buenos Aires.</p>
+
+            <h3 class="font-syne font-bold text-white text-sm">2. Registro y Responsabilidad de la Cuenta</h3>
+            <p>Para publicar encuentros o postularse a partidos, el usuario debe registrarse con información veraz y mantener la confidencialidad de sus credenciales de acceso. Cada usuario es responsable de la actividad realizada desde su cuenta.</p>
+
+            <h3 class="font-syne font-bold text-white text-sm">3. Compromiso de Asistencia y Fair Play</h3>
+            <p>La postulación a un partido implica un compromiso de asistencia puntual y conducta deportiva respetuosa. Los organizadores se comprometen a publicar datos reales sobre sede, horario, modalidad y valor estimado por jugador.</p>
+
+            <h3 class="font-syne font-bold text-white text-sm">4. Alcance y Limitación de Responsabilidad</h3>
+            <p>Fulbo Match actúa exclusivamente como herramienta de contacto entre participantes. La reserva efectiva de las canchas, los acuerdos económicos entre jugadores y organizadores, y la aptitud física para la práctica deportiva corren por cuenta de cada participante.</p>
+
+            <h3 class="font-syne font-bold text-white text-sm">5. Modificaciones y Contacto</h3>
+            <p>Fulbo Match podrá actualizar estos Términos y Condiciones para mejorar el funcionamiento del servicio. Ante cualquier duda o reclamo, podés comunicarte mediante el formulario de <a href="{% url 'contacto' %}" class="text-primary underline font-semibold">Contacto / Soporte</a>.</p>
+        </div>
+
+        <div class="border-t border-slate-800 pt-4 text-center">
+            <a href="{% url 'index_cliente' %}" class="inline-block py-3 px-6 bg-primary text-slate-950 font-syne font-extrabold text-xs rounded-xl shadow-lg hover:bg-lime-400 transition-all">
+                Aceptar y volver a la app
+            </a>
+        </div>
+
+    </div>
+</body>
+</html>
